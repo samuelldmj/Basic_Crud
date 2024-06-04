@@ -1,3 +1,21 @@
+<?php require_once 'config/db_conn.php'; ?>
+
+<?php
+
+
+$select = $conn->query("SELECT * FROM task");
+$select->execute();
+$gettodo = $select->fetchAll(PDO::FETCH_OBJ);
+
+
+
+
+
+
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,12 +35,12 @@
 
 <div class="container-lg mt-5">
     
-        <form class="row justify-content-center g-3 form">
+        <form class="row justify-content-center g-3 form" method="post" action="insert.php">
             <div class="col-auto">
-                <input type="password" class="form-control" id="inputPassword2" placeholder="Enter Task">
+                <input name="mytask" type="text" class="form-control" placeholder="Enter Task">
             </div>
             <div class="col-auto">
-                <button type="submit" class="btn btn-primary mb-3">Create</button>
+                <button name="submit" type="submit" class="btn btn-primary mb-3">Create</button>
             </div>
         </form>
         <!-- Table -->
@@ -35,12 +53,13 @@
                 </tr>
             </thead>
             <tbody>
+                <?php foreach($gettodo as $do): ?>
                 <tr>
-                    <th scope="row">1</th>
-                    <td>Workin Out</td>
+                    <th scope="row"><?php echo $do->id ?></th>
+                    <td><?php echo $do->names?></td>
                     <td><button type="button" class="btn btn-danger">Delete</button></td>
                 </tr>
-
+                 <?php endforeach; ?>
             </tbody>
         </table>
 
